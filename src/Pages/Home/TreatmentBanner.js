@@ -1,9 +1,10 @@
 import React from "react";
 import treatment from '../../assets/images/treatment.png'
+import PrimaryButton from "../Shared/PrimaryButton";
 
 const TreatmentBanner = () => {
   return (
-    <div className="hero min-h-screen">
+    <div className="hero min-h-screen md:mb-20">
       <div className="hero-content flex-col lg:flex-row">
         <img
           src={treatment}
@@ -19,9 +20,7 @@ const TreatmentBanner = () => {
             here', making it look like readable English. Many desktop publishing packages and web
             page
           </p>
-          <button className="uppercase btn btn-primary text-white font-bold bg-gradient-to-r from-secondary to-primary">
-            Get Started
-          </button>
+          <PrimaryButton>Get Started</PrimaryButton>
         </div>
       </div>
     </div>
