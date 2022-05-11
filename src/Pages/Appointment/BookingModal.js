@@ -1,21 +1,59 @@
+import { format } from "date-fns";
 import React from "react";
 
-const BookingModal = ({treatment}) => {
+const BookingModal = ({ treatment, date }) => {
+  const {_id, name, slots } = treatment;
+  const handleBooking = e =>{
+    e.preventDefault();
+    const slot = e.target.slot.value;
+    console.log(_id,name,slot);
+  }
   return (
     <div>
       <input type="checkbox" id="booking-modal-6" className="modal-toggle" />
       <div className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Congratulations random Interner user!</h3>
-          <p className="py-4">
-            You've been selected for a chance to get one year of subscription to use Wikipedia for
-            free!
-          </p>
-          <div className="modal-action">
-            <label for="booking-modal-6" className="btn">
+          <label htmlFor="booking-modal-6" className="btn btn-sm btn-circle absolute right-2 top-2">
+            ✕
+          </label>
+          <h3 className="font-bold text-lg">{name}</h3>
+          <form className="grid grid-cols-1 justify-items-center gap-3 mt-3" onSubmit={handleBooking}>
+            <input
+              type="text"
+              disabled
+              value={format(date, "PP")}
+              className="input input-bordered w-full md:max-w-md"
+            />
+            <select name="slot" className="select select-bordered w-full md:max-w-md">
+              {
+                slots.map(slot=><option key={slot} value={slot}>{slot}</option>)
+              }
+            </select>
+            <input
+              type="text"
+              name="name"
+              placeholder="Your Name"
+              className="input input-bordered w-full md:max-w-md"
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email Address"
+              className="input input-bordered w-full md:max-w-md"
+            />
+            <input
+              type="text"
+              placeholder="Phone Number"
+              name="phone"
+              className="input input-bordered w-full md:max-w-md"
+            />
+            <input type="submit" value="Submit" className="btn btn-neutral w-full md:max-w-md" />
+          </form>
+          {/*  <div className="modal-action">
+            <label htmlFor="booking-modal-6" className="btn">
               Yay!
             </label>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
