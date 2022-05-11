@@ -11,7 +11,7 @@ import TreatmentBanner from "./TreatmentBanner";
 
 const Home = () => {
   return (
-    <div>
+    <div className="px-3 md:px-0">
       <Banner></Banner>
       <Info></Info>
       <Services></Services>
