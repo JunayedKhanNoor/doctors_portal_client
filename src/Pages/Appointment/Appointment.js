@@ -1,14 +1,21 @@
-import React from 'react';
-import Footer from '../Shared/Footer';
-import AppointmentBanner from './AppointmentBanner';
+import React, { createContext, useState } from "react";
+import Footer from "../Shared/Footer";
+import AppointmentBanner from "./AppointmentBanner";
+import AvailableAppointments from "./AvailableAppointments";
+
+export const DateContext = createContext("Date");
 
 const Appointment = () => {
-    return (
-        <div>
-            <AppointmentBanner></AppointmentBanner>
-            <Footer></Footer>
-        </div>
-    );
+  const [date, setDate] = useState(new Date());
+  return (
+    <DateContext.Provider value={[date, setDate]}>
+      <div>
+        <AppointmentBanner></AppointmentBanner>
+        <AvailableAppointments></AvailableAppointments>
+        <Footer></Footer>
+      </div>
+    </DateContext.Provider>
+  );
 };
 
 export default Appointment;
