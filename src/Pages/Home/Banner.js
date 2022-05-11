@@ -6,7 +6,7 @@ const Banner = () => {
   return (
     <div className="hero min-h-screen bg-[url('/src/assets/images/bg.png')]">
       <div className="hero-content flex-col lg:flex-row-reverse">
-        <img src={chair} className="sm:w-full md:max-w-sm rounded-lg shadow-2xl"  alt="banner"/>
+        <img src={chair} className="sm:w-full md:max-w-sm lg:max-w-md rounded-lg shadow-2xl"  alt="banner"/>
         <div>
           <h1 className="text-5xl font-bold">Your New Smile Starts Here</h1>
           <p className="py-6">
