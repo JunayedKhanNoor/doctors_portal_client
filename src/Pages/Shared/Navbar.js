@@ -16,11 +16,11 @@ const Navbar = () => {
       <li><Link to="/appointment">Appointment</Link></li>
       <li><Link to="/review">Reviews</Link></li>
       <li><Link to="/contact">Contact Us</Link></li>
-      <li>{user?<button onClick={logout} class="btn btn-ghost">Sign Out</button> :<Link to="/login">Login</Link>}</li>
+      <li>{user?<button onClick={logout} className="btn btn-ghost">Sign Out</button> :<Link to="/login">Login</Link>}</li>
     </>
   );
   return (
-    <div className="navbar bg-base-100 shadow-lg">
+    <div className="navbar bg-base-100">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex="0" className="btn btn-ghost lg:hidden">
