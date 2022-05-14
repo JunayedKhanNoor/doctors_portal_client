@@ -1,19 +1,23 @@
-import React, { useEffect } from "react";
-import { useSignInWithEmailAndPassword, useSignInWithGoogle } from "react-firebase-hooks/auth";
+import React, { useEffect, useRef } from "react";
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWithGoogle } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
 import { useForm } from "react-hook-form";
 import Loading from "../Shared/Loading";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { async } from "@firebase/util";
 
 const Login = () => {
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
   const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
+  const [sendPasswordResetEmail, sending, resetError] = useSendPasswordResetEmail(auth);
   const location = useLocation();
   const navigate = useNavigate();
   let from = location.state?.from?.pathname || "/";
+  const emailRef = useRef('');
 
   const {
     register,
+    getValues,
     formState: { errors },
     handleSubmit,
   } = useForm();
@@ -26,11 +30,22 @@ const Login = () => {
     }
   }, [user, gUser,from,navigate]);
 
-  if (loading || gLoading) {
+  if (loading || gLoading || sending) {
     return <Loading></Loading>;
   }
   if (error || gError) {
     signInError = <p className="text-red-500 text-sm">{error?.message || gError?.message}</p>;
+  }
+
+  const handleReset = async(emailValue) =>{
+    const email = emailValue;
+    console.log(email);
+    if (email) {
+      sendPasswordResetEmail(email);
+      alert("Reset Password email sent");
+    }else{
+      alert("Please give your email");
+    }
   }
 
   const onSubmit = (data) => {
@@ -49,6 +64,7 @@ const Login = () => {
               </label>
               <input
                 type="email"
+                ref={emailRef}
                 placeholder="Your Email"
                 className="input input-bordered w-full"
                 {...register("email", {
@@ -98,6 +114,10 @@ const Login = () => {
                   <span className="label-text-alt text-red-500">{errors.password.message}</span>
                 )}
               </label>
+              <p className="text-sm p-2 hover:text-secondary" role='button' onClick={()=>{
+                const emailValue = getValues("email");
+                handleReset(emailValue);
+              }}>Forgot password?</p>
             </div>
             {signInError}
             <input className="btn w-full text-white" type="submit" value="Login" />
