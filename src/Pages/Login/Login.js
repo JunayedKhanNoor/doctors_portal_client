@@ -41,7 +41,7 @@ const Login = () => {
     const email = emailValue;
     console.log(email);
     if (email) {
-      sendPasswordResetEmail(email);
+      await sendPasswordResetEmail(email);
       alert("Reset Password email sent");
     }else{
       alert("Please give your email");
