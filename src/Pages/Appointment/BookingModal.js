@@ -3,11 +3,14 @@ import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
 import { toast } from 'react-toastify';
+import { signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const BookingModal = ({ treatment, setTreatment, date, refetch  }) => {
   const { _id, name, slots } = treatment;
   const [user, loading] = useAuthState(auth);
   const formattedDate = format(date, "PP");
+  const navigate = useNavigate();
   const handleBooking = (e) => {
     e.preventDefault();
     const slot = e.target.slot.value;
@@ -27,7 +30,14 @@ const BookingModal = ({ treatment, setTreatment, date, refetch  }) => {
       },
       body: JSON.stringify(booking),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 401 || res.status === 403) {
+          signOut(auth);
+          localStorage.removeItem('accessToken');
+          navigate("/");
+        }
+        return res.json();
+      })
       .then((data) => {
         console.log(booking);
         if (data.success) {
