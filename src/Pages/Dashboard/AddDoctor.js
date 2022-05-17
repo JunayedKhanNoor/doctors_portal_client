@@ -10,8 +10,40 @@ const AddDoctor = () => {
     handleSubmit,
   } = useForm();
   const { data: services, isLoading } = useQuery("services", () => fetch("http://localhost:5000/service").then(res => res.json()));
+  const imageStorageKey = '3c515afd80f94e87e2d080a791419f38';
+  /**
+     * 3 ways to store images
+     * 1. Third party storage //Free open public storage is ok for Practice project 
+     * 2. Your own storage in your own server (file system)
+     * 3. Database: Mongodb 
+     * 
+     * YUP: to validate file: Search: Yup file validation for react hook form
+    */
   const onSubmit = async (data) => {
     console.log("Data od Doctor", data);
+    const formData = new FormData();
+    const image = data.image[0];
+    formData.append('image', image);
+    const url = `https://api.imgbb.com/1/upload?key=${imageStorageKey}`;
+    fetch(url,{
+        method: 'POST',
+        body:formData
+    })
+    .then(res=>res.json())
+    .then(result=>{
+        if (result.success) {
+            const img = result.data.url;
+            const doctor = {
+                name: data.name,
+                email: data.email,
+                specialty: data.specialty,
+                img: img
+            }
+            console.log(doctor);
+            //send to your db
+        }
+        console.log('imageBB result', result);
+    })
   };
   if (isLoading) {
       return <Loading></Loading>
@@ -73,7 +105,7 @@ const AddDoctor = () => {
           <label className="label">
             <span className="label-text">Specialty</span>
           </label>
-          <select {...register("specialty")} className="select w-full max-w-md">
+          <select {...register("specialty")} className="select input-bordered w-full max-w-md">
             {services.map(service=><option 
             key={service._id} value={service.name}>{service.name}</option>)}
           </select>
