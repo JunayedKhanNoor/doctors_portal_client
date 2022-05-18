@@ -2,7 +2,7 @@ import React from "react";
 import PrimaryButton from "../Shared/PrimaryButton";
 
 const Service = ({ service, setTreatment }) => {
-  const { name, slots } = service;
+  const { name, slots, price } = service;
   return (
     <div className="card lg:max-w-lg bg-base-100 shadow-xl">
       <div className="card-body items-center text-center">
@@ -17,6 +17,7 @@ const Service = ({ service, setTreatment }) => {
         <p className="uppercase">
           {slots.length} {slots.length > 1 ? "spaces" : "space"} available
         </p>
+        <p className="text-sm uppercase">Price: ${price}</p>
         <div className="card-actions">
          {/*  <button
             className="btn btn-primary text-white bg-gradient-to-r from-secondary to-primary"

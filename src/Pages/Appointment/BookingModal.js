@@ -7,7 +7,7 @@ import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 const BookingModal = ({ treatment, setTreatment, date, refetch  }) => {
-  const { _id, name, slots } = treatment;
+  const { _id, name, slots, price } = treatment;
   const [user, loading] = useAuthState(auth);
   const formattedDate = format(date, "PP");
   const navigate = useNavigate();
@@ -19,6 +19,7 @@ const BookingModal = ({ treatment, setTreatment, date, refetch  }) => {
       treatment: name,
       date: formattedDate,
       slot,
+      price,
       patient: user.email,
       patientName: user.displayName,
       phone: e.target.phone.value,
