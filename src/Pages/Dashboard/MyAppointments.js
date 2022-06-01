@@ -59,7 +59,10 @@ const MyAppointments = () => {
                     </Link>
                   )}
                   {a.price && a.paid && (
-                      <span className="text-success">Payment Successful</span>
+                      <div>
+                        <p><span className="text-success">Payment Successful</span></p>
+                        <p>Transaction Id: <span className="text-success">{a.transactionId}</span></p>
+                      </div>
                   )}
                 </td>
               </tr>
